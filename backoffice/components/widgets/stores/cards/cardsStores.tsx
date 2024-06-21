@@ -1,4 +1,5 @@
 
+import { LayoutTemplateIcon, LocateIcon, TagIcon } from "lucide-react"
 import Link from "next/link"
 interface Props {
     _id?: string
@@ -58,71 +59,5 @@ export default function CardsStores({ _id, name, description, created_at, catego
 
             </div>
         </div>
-    )
-}
-
-function LayoutTemplateIcon(props: any) {
-    return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <rect width="18" height="7" x="3" y="3" rx="1" />
-            <rect width="9" height="7" x="3" y="14" rx="1" />
-            <rect width="5" height="7" x="16" y="14" rx="1" />
-        </svg>
-    )
-}
-
-
-function LocateIcon(props: any) {
-    return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <line x1="2" x2="5" y1="12" y2="12" />
-            <line x1="19" x2="22" y1="12" y2="12" />
-            <line x1="12" x2="12" y1="2" y2="5" />
-            <line x1="12" x2="12" y1="19" y2="22" />
-            <circle cx="12" cy="12" r="7" />
-        </svg>
-    )
-}
-
-
-function TagIcon(props: any) {
-    return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" />
-            <circle cx="7.5" cy="7.5" r=".5" fill="currentColor" />
-        </svg>
     )
 }

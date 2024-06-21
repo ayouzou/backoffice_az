@@ -12,9 +12,7 @@ const stores = () => {
     <>
       <StoresListPage />
     </>
-    // <LayoutDash>
-    // <StoresListPage />
-    // </LayoutDash>
+ 
   )
 }
 

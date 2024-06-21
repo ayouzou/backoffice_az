@@ -5,7 +5,7 @@ import { UploadCloudIcon } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, } from "@/components/ui/card"
 interface Props {
-    name: string
+    name?: string
     id?: string
     label?: string
     placeholder?: string
@@ -53,7 +53,6 @@ const FileUpload = ({ id, name, label, placeholder, setUploadedAssets, multiple 
     const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.currentTarget.files ?? []);
         setSelectedFiles(files);
-        console.log('files, ', e.target.files)
         await Promise.all(files.map(file => uploadImage(file)));
         setBlobs((prev) => [...(prev ?? []), ...files.map(file => URL.createObjectURL(file))]);
     };
@@ -86,7 +85,7 @@ const FileUpload = ({ id, name, label, placeholder, setUploadedAssets, multiple 
             </div>
             {/* 6. display selected files */}
             {!!selectedFiles.length && (
-                <Card>
+                <Card className=" flex items-center">
                     <CardHeader>
                         <CardTitle className="text-md">Selected Files:</CardTitle>
                     </CardHeader>

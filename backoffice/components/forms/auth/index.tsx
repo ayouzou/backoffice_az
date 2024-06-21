@@ -4,38 +4,12 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { loginFormSchema } from "./schema"
 import { Button } from "@/components/form-element/button"
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
-
+import {   Form, FormControl, FormDescription,    FormField,FormItem,FormLabel,FormMessage} from "@/components/ui/form"
 import { Input } from "@/components/form-element/input"
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import useAuth from "@/hooks/useAuth";
-
-function storeCookie(name: string, value: string) {
-    // let's extract the days from the token value
-    const decodedToken: {
-        sub: string; // Subject (typically a user ID)
-        iat: number; // Issued at (timestamp)
-        exp: number; // Expiration (timestamp)
-    } = jwtDecode(value);
-    let days = decodedToken.exp - decodedToken.iat;
-    days = Math.floor(days / 60 / 60 / 24);
-    let expires = "";
-    if (days) {
-        const date = new Date();
-        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-        expires = ";expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + ";path=/";
-}
+import { storeCookie } from "@/lib/auth";
 export function LoginForm() {
     const { toast } = useToast()
     const { auth } = useAuth()
@@ -48,14 +22,11 @@ export function LoginForm() {
         },
     })
     const [isLoading, setIsLoading] = useState(false)
-
-
     async function onSubmit(values: z.infer<typeof loginFormSchema>) {
         setIsLoading(true);
         const { email, password } = values;
         // API_URL='https://server-ecom2.onrender.com/api'
-        const API = 'https://server-ecom2.onrender.com/api'
-        console.log("API",API)
+        const API = 'http://localhost:3000/api'
         try {
             const response = await fetch(`${API}/users/login`, {
                 method: 'POST',
@@ -83,7 +54,7 @@ export function LoginForm() {
                     title: "Login success",
                 })
             }
-            console.log("response", data);
+
             window.location.href = '/stores'
             setIsLoading(false);
         } catch (error) {
@@ -92,13 +63,11 @@ export function LoginForm() {
                 title: "Uh oh! Something went wrong.",
                 description: "Your credentials are not valid.",
             })
-            console.log(error);
         }
-        console.log(values)
+
     }
 
     useEffect(() => {
-        console.log(auth)
         if (auth.isAuthenticated) {
             window.location.href = '/stores'
         }

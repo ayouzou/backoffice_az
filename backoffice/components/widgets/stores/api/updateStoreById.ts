@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const UPDATE_STORE_ENDPOINT = `https://server-ecom2.onrender.com/api/stores`;
+const UPDATE_STORE_ENDPOINT = `http://localhost:3000/api/stores`;
 
 export async function updateStoreById(
   body: Record<string, string>,

@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const DELETE_STORE_ENDPOINT = `https://server-ecom2.onrender.com/api/stores`;
+const DELETE_STORE_ENDPOINT = `http://localhost:3000/api/stores`;
 
 export async function deleteStoreById(
   body: Record<string, string | undefined>,

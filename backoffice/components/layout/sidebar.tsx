@@ -1,45 +1,76 @@
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa'
+import { BsChatSquareDots } from "react-icons/bs";
 
 const Sidebar = () => {
+    const router = useRouter()
+    const [openProduct, setOpenProduct] = useState(false)
     return (
-        <div className='w-80 h-screen '>
-            <nav className="grid items-start px-4 text-sm font-medium">
+        <div className='w-64  border-r-2'>
+            <nav className="flex flex-col gap-y-4 mt-4 items-start px-4 text-sm font-medium">
                 <Link
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 bg-gray-100 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
-                    href="#"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
+                    href={`/store/${router.query.slug}`}
                 >
                     <HomeIcon className="h-4 w-4" />
                     Overview
                 </Link>
                 <Link
                     className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                    href="#"
-                >
-                    <PackageIcon className="h-4 w-4" />
-                    Products
-                </Link>
-                <Link
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                    href="#"
+                    href={`/store/${router.query.slug}/orders`}
                 >
                     <ShoppingCartIcon className="h-4 w-4" />
                     Orders
                 </Link>
                 <Link
                     className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                    href="#"
+                    href={`/store/${router.query.slug}/customers`}
                 >
                     <UsersIcon className="h-4 w-4" />
                     Customers
                 </Link>
+                <div className='w-full'>
+                    <div className='flex items-center justify-between w-full ' onClick={() => setOpenProduct(!openProduct)}>
+                        <div className='flex items-center w-full  gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 '>
+                            <PackageIcon className="h-4 w-4" />
+                            Products
+
+                        </div>
+                        {
+                            openProduct ? <FaAngleUp /> : <FaAngleDown />
+                        }
+                    </div>
+                    {
+                        openProduct ?
+                            <>
+                                <Link
+                                    className="flex items-center gap-3 rounded-lg px-6 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                                    href={`/store/${router.query.slug}/products2`}>
+                                    <PackageIcon className="h-4 w-4" />
+                                    All products
+                                </Link>
+                                <Link
+                                    className="flex items-center gap-3 rounded-lg px-6 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                                    href={`/store/${router.query.slug}/create-products`}>
+                                    <PackageIcon className="h-4 w-4" />
+                                    create products
+                                </Link>
+                            </> : ''
+                    }
+                </div>
+                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    href={`/store/${router.query.slug}/chats`}>
+                    <BsChatSquareDots className="h-4 w-4" />
+                    Chats
+                </Link>
+
             </nav>
         </div>
     )
 }
-
 export default Sidebar
-
 
 function HomeIcon(props: any) {
     return (

@@ -8,7 +8,6 @@ import CardsStores from './cards/cardsStores'
 export default function StoresList() {
     const { auth } = useAuth()
     const { isLoading, data: storesData } = useQuery({ queryKey: ['STORES'], queryFn: () => getStoresByUserId(auth) })
-    console.log(storesData)
     return (
         <div className="space-y-8">
             <div className="flex flex-col items-center gap-2">
@@ -21,10 +20,10 @@ export default function StoresList() {
                         <section className="container  px-4 py-12 md:px-6 lg:py-16">
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 ">
                                 {storesData?.stores?.map((store) => (
-                                    <>
-                                        <CardsStores {...store} key={store._id} href={store.slug} />
+                                    <div key={store.slug}>
+                                        <CardsStores {...store} key={store._id} href={store.slug}  />
                                         {/* <StoreCard {...store} key={store._id} href={store.slug} actions={['view']} /> */}
-                                    </>
+                                    </div>
                                 ))}
                             </div>
                         </section>

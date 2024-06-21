@@ -1,30 +1,42 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import LayoutDash from '@/components/layout/layout'
-import Link from "next/link"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
-import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
+import CardProfileStore from '@/components/widgets/stores/cards/CardProfileStore'
+import { getStoreBySlug } from '@/components/widgets/stores/api/getStoreBySlug'
+import { useQuery } from '@tanstack/react-query'
+import { getProductsByStoreSlug } from '@/components/widgets/products/api/getProductsByStoreSlug'
+import { getOrdersByStoreId } from '@/components/widgets/orders/api/getOrdersByStoreId'
+import useAuth from '@/hooks/useAuth'
+import { BsChatSquareDots } from 'react-icons/bs'
+import { getCustomersByStoreSlug } from '@/components/widgets2/customers/api/getCustomersByStoreSlug'
 
 const index = () => {
+    const { auth } = useAuth()
     const router = useRouter()
+    const { slug } = router.query
+
+    const { data: storeInfoData } = useQuery({ queryKey: ['STORE_INFO', slug], queryFn: () => getStoreBySlug({ slug }, auth) })
+    const { data: productsData, isLoading, isError } = useQuery({ queryKey: ['STORE_PRODUCTS', slug], queryFn: () => getProductsByStoreSlug(slug, auth) })
+    const { data: customers } = useQuery({ queryKey: ['STORE_CUSTOMERS', slug], queryFn: () => getCustomersByStoreSlug(slug, auth) })
+    const { data: orders } = useQuery({ queryKey: ['STORE_ORDERS', slug], queryFn: () => getOrdersByStoreId({ storeId: storeInfoData?.storeInfo?.store?._id as string }, auth) })
 
     return (
         <LayoutDash>
             <div className="grid min-h-screen w-full overflow-hidden ">
                 <div className="flex flex-col">
-
                     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        <div >
+                            <CardProfileStore />
+                        </div>
+                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                                    <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+                                    <CardTitle className="text-sm font-medium">Products</CardTitle>
                                     <DollarSignIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">$45,231.89</div>
+                                    <div className="text-2xl font-bold">{productsData?.data && productsData?.data?.length}</div>
                                     <p className="text-xs text-gray-500 dark:text-gray-400">+20.1% from last month</p>
                                 </CardContent>
                             </Card>
@@ -34,8 +46,8 @@ const index = () => {
                                     <UsersIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">+2350</div>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">+180.1% from last month</p>
+                                    <div className="text-2xl font-bold">{customers?.data && customers?.data.length} </div>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">+19% from last month</p>
                                 </CardContent>
                             </Card>
                             <Card>
@@ -44,100 +56,23 @@ const index = () => {
                                     <ShoppingCartIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">+12,234</div>
+                                    <div className="text-2xl font-bold">
+                                        {orders?.data && orders?.data?.filter((order: any) => order.status === 'DELIVERED').length}
+                                    </div>
                                     <p className="text-xs text-gray-500 dark:text-gray-400">+19% from last month</p>
                                 </CardContent>
                             </Card>
-                        </div>
-                        <div>
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                                    <CardTitle className="text-sm font-medium">Recent Orders</CardTitle>
-                                    <Button size="sm" variant="outline">
-                                        View All
-                                    </Button>
+                                    <CardTitle className="text-sm font-medium">Unread Chats</CardTitle>
+                                    <BsChatSquareDots className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                                 </CardHeader>
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead className="w-[100px]">Order</TableHead>
-                                            <TableHead>Customer</TableHead>
-                                            <TableHead className="hidden md:table-cell">Channel</TableHead>
-                                            <TableHead className="hidden md:table-cell">Date</TableHead>
-                                            <TableHead className="text-right">Total</TableHead>
-                                            <TableHead className="hidden sm:table-cell">Status</TableHead>
-                                            <TableHead className="text-right">Actions</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell className="font-medium">#3210</TableCell>
-                                            <TableCell>Olivia Martin</TableCell>
-                                            <TableCell className="hidden md:table-cell">Online Store</TableCell>
-                                            <TableCell className="hidden md:table-cell">February 20, 2022</TableCell>
-                                            <TableCell className="text-right">$42.25</TableCell>
-                                            <TableCell className="hidden sm:table-cell">Shipped</TableCell>
-                                            <TableCell className="text-right">
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <Button size="icon" variant="ghost">
-                                                            <MoveHorizontalIcon className="w-4 h-4" />
-                                                            <span className="sr-only">Actions</span>
-                                                        </Button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end">
-                                                        <DropdownMenuItem>View order</DropdownMenuItem>
-                                                        <DropdownMenuItem>Customer details</DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell className="font-medium">#3209</TableCell>
-                                            <TableCell>Ava Johnson</TableCell>
-                                            <TableCell className="hidden md:table-cell">Shop</TableCell>
-                                            <TableCell className="hidden md:table-cell">January 5, 2022</TableCell>
-                                            <TableCell className="text-right">$74.99</TableCell>
-                                            <TableCell className="hidden sm:table-cell">Paid</TableCell>
-                                            <TableCell className="text-right">
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <Button size="icon" variant="ghost">
-                                                            <MoveHorizontalIcon className="w-4 h-4" />
-                                                            <span className="sr-only">Actions</span>
-                                                        </Button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end">
-                                                        <DropdownMenuItem>View order</DropdownMenuItem>
-                                                        <DropdownMenuItem>Customer details</DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell className="font-medium">#3204</TableCell>
-                                            <TableCell>Michael Johnson</TableCell>
-                                            <TableCell className="hidden md:table-cell">Shop</TableCell>
-                                            <TableCell className="hidden md:table-cell">August 3, 2021</TableCell>
-                                            <TableCell className="text-right">$64.75</TableCell>
-                                            <TableCell className="hidden sm:table-cell">Unfulfilled</TableCell>
-                                            <TableCell className="text-right">
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <Button size="icon" variant="ghost">
-                                                            <MoveHorizontalIcon className="w-4 h-4" />
-                                                            <span className="sr-only">Actions</span>
-                                                        </Button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end">
-                                                        <DropdownMenuItem>View order</DropdownMenuItem>
-                                                        <DropdownMenuItem>Customer details</DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
+                                <CardContent>
+                                    <div className="text-2xl font-bold">
+                                        {orders?.data && orders?.data?.filter((order: any) => order.status === 'DELIVERED').length}
+                                    </div>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">Here gonna be Unread messages</p>
+                                </CardContent>
                             </Card>
                         </div>
                     </main>

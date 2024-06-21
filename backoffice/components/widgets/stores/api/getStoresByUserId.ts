@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const GET_STORES_ENDPOINT = `https://server-ecom2.onrender.com/api/stores`;
+const GET_STORES_ENDPOINT = `http://localhost:3000/api/stores`;
 
 type Store = {
   category: string;
