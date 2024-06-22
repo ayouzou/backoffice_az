@@ -1,4 +1,4 @@
-const GET_STORES_ENDPOINT_BY_ID = `http://localhost:3000/api/conversation`;
+const GET_STORES_ENDPOINT_BY_ID = `${process.env.NEXT_PUBLIC_API_URL}/conversation`;
 
 export async function getAllConversationBySlug(
     slug: any

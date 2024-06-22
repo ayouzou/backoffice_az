@@ -1,5 +1,5 @@
 
-const GET_PRODUCTS_BY_STORE_ENDPOINT = `http://localhost:3000/api/products/two`;
+const GET_PRODUCTS_BY_STORE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/products/two`;
 
 export type Product = {
     reviews: string[];
@@ -7,9 +7,9 @@ export type Product = {
     images: string[];
     product_name: string;
     description: string
-    price: number;
+    price: any;
     availability_status: "In Stock" | "Out of Stock";
-    quantity_available: number;
+    quantity_available: any;
     is_active: boolean;
     creation_date: Date;
     colors: string[];
@@ -19,10 +19,11 @@ export type Product = {
     category_id: string[];
     available_sizes: string[];
     available_colors: string[];
-    category:string
+    category: string
 
 };
 export const getProductById = async (id: any) => {
+    console.log("id", id)
     try {
         const url = `${GET_PRODUCTS_BY_STORE_ENDPOINT}/${id}`;
         const response = await fetch(url, {
@@ -31,7 +32,7 @@ export const getProductById = async (id: any) => {
                 "Content-Type": "application/json",
             },
         });
-        // if (!response.ok) throw new Error("Error fetching products by store");
+        if (!response.ok) throw new Error("Error fetching products by store");
         const data: Product = await response.json();
         return { data, error: null };
     } catch (error) {

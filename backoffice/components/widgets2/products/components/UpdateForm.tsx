@@ -30,7 +30,8 @@ const UpdateForm = () => {
   const router = useRouter()
   const { slug, id } = router.query
   const queryClient = useQueryClient()
-  const { data: productData } = useQuery({ queryKey: ['PRODUCT_ID'], queryFn: () => getProductById(id) })
+  const { data: productData } = useQuery({ queryKey: ['PRODUCT_ID', id], queryFn: () => getProductById(id) })
+  console.log("productData", productData)
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -50,15 +51,11 @@ const UpdateForm = () => {
     },
     onSettled(res) {
       if (!res?.error) {
-        queryClient.invalidateQueries({ queryKey: ['STORE_PRODUCTS', slug] })
+        queryClient.invalidateQueries({ queryKey: ['PRODUCT_ID', id] })
       }
     }
   })
-  const checkImages = uploadedAssets || productData?.data?.images
 
-  // console.log('uploadedAssets:', uploadedAssets);
-  // console.log('productData?.data?.images:', productData?.data?.images);
-  // console.log('checkImages:', checkImages);
   const submitData = (data: z.infer<typeof schema>) => {
     return mutate({
       ...data,
@@ -83,6 +80,7 @@ const UpdateForm = () => {
                       <FormItem>
                         <label>Product Name</label>
                         <Input {...field} defaultValue={productData?.data?.product_name} />
+                        {productData?.data?.product_name}
                         <FormMessage />
                       </FormItem>)}
                   />
@@ -242,7 +240,7 @@ const UpdateForm = () => {
                 <div className='m-4 mt-1'>
                   <FileUpload name="logo" multiple={true} setUploadedAssets={setUploadedAssets} />
                   <div className='mt-2 flex gap-3'>
-                    {productData?.data?.images.map((img, index) => (
+                    {productData?.data?.images?.map((img, index) => (
                       <img src={img} alt="" className='w-10 h-10' key={index} />
                     ))}
                   </div>

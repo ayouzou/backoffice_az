@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const GET_STORES_ENDPOINT = `http://localhost:3000/api/stores`;
+const GET_STORES_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/stores`;
 
 type Store = {
   category: string;
@@ -13,7 +13,6 @@ type Store = {
   updated_at: string;
   template: "XMTA" | "RAYBAN";
 };
-
 export async function getStoresByUserId(session: Session) {
   try {
     if (!session?.user?.token) throw new Error("Unauthorized");

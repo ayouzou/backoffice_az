@@ -20,8 +20,8 @@ const AllOrders = () => {
     const { slug } = router.query
     const { auth } = useAuth()
     const { data: storeInfoData } = useQuery({ queryKey: ['STORE_INFO', slug], queryFn: () => getStoreBySlug({ slug }, auth) })
-
-    const { data: orders } = useQuery({ queryKey: ['STORE_ORDERS', slug], queryFn: () => getOrdersByStoreId({ storeId: storeInfoData?.storeInfo?.store?._id as string }, auth) })
+    const storeId = storeInfoData?.storeInfo?.store?._id as string
+    const { data: orders } = useQuery({ queryKey: ['STORE_ORDERS', storeId], queryFn: () => getOrdersByStoreId({ storeId }, auth) })
     const displayOrders = useMemo(() => {
         if (selectedStatus === 'all' || !selectedStatus) return orders?.data || []
         return orders?.data && orders.data.filter((order: any) => order?.status === selectedStatus)

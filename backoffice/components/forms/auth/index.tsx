@@ -25,8 +25,9 @@ export function LoginForm() {
     async function onSubmit(values: z.infer<typeof loginFormSchema>) {
         setIsLoading(true);
         const { email, password } = values;
-        // API_URL='https://server-ecom2.onrender.com/api'
-        const API = 'http://localhost:3000/api'
+        // const API = 'http://localhost:3000/api'
+        const API = `${process.env.NEXT_PUBLIC_API_URL}`
+
         try {
             const response = await fetch(`${API}/users/login`, {
                 method: 'POST',

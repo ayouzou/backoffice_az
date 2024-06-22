@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const EDIT_ORDER_STATUS_ENDPOINT = `http://localhost:3000/api/orders`;
+const EDIT_ORDER_STATUS_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/orders`;
 
 export const editOrderStatus = async (
   body: Record<string, string | string[] | number | boolean>,

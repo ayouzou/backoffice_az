@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const GET_CUSTOMERS_ENDPOINT_BY_ID = `http://localhost:3000/api/customers/all`;
+const GET_CUSTOMERS_ENDPOINT_BY_ID = `${process.env.NEXT_PUBLIC_API_URL}/customers/all`;
 
 export async function getCustomersByStoreSlug(slug: any, session: Session) {
     try {

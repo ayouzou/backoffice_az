@@ -19,7 +19,8 @@ const index = () => {
     const { data: storeInfoData } = useQuery({ queryKey: ['STORE_INFO', slug], queryFn: () => getStoreBySlug({ slug }, auth) })
     const { data: productsData, isLoading, isError } = useQuery({ queryKey: ['STORE_PRODUCTS', slug], queryFn: () => getProductsByStoreSlug(slug, auth) })
     const { data: customers } = useQuery({ queryKey: ['STORE_CUSTOMERS', slug], queryFn: () => getCustomersByStoreSlug(slug, auth) })
-    const { data: orders } = useQuery({ queryKey: ['STORE_ORDERS', slug], queryFn: () => getOrdersByStoreId({ storeId: storeInfoData?.storeInfo?.store?._id as string }, auth) })
+    const storeId = storeInfoData?.storeInfo?.store?._id as string
+    const { data: orders } = useQuery({ queryKey: ['STORE_ORDERS', storeId], queryFn: () => getOrdersByStoreId({ storeId }, auth) })
 
     return (
         <LayoutDash>

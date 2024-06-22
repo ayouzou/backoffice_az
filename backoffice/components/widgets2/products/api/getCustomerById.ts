@@ -1,4 +1,4 @@
-const GET_PRODUCTS_BY_STORE_ENDPOINT = `http://localhost:3000/api/customers/customer`;
+const GET_PRODUCTS_BY_STORE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/customers/customer`;
 
 export const getCustomerById = async (
     customerId: {

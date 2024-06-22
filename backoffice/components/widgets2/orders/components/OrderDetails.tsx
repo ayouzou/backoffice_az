@@ -33,7 +33,8 @@ const OrderDetails = () => {
     const { auth } = useAuth()
     const router = useRouter()
     const { slug, id } = router.query
-    const { data: order } = useQuery({ queryKey: ['ORDER_ID',id], queryFn: () => getOrderById({ orderId: id }) })
+    const orderId = id
+    const { data: order } = useQuery({ queryKey: ['ORDER_ID', orderId], queryFn: () => getOrderById({ orderId }) })
     const [orderStatus, setOrderStatus] = React.useState<string>(order?.data?.status);
 
     const queryClient = useQueryClient()
@@ -43,15 +44,15 @@ const OrderDetails = () => {
         },
         onSettled(res) {
             if (!res?.error) {
-                queryClient.invalidateQueries({ queryKey: ['ORDER_ID', slug] })
+                queryClient.invalidateQueries({ queryKey: ['ORDER_ID', orderId] })
             }
         }
     })
     const subtotal = order?.data?.products.reduce((total: number, item: any) => total + item.price * item.quantity, 0)
     const discount = subtotal * 0.1
     const total = subtotal - discount
-    const items = order?.data?.products.reduce((totalItems: number, item: any) => totalItems + item.quantity , 0)
-    
+    const items = order?.data?.products.reduce((totalItems: number, item: any) => totalItems + item.quantity, 0)
+
     const handleConfirm = () => {
         editStatus({ orderId: order?.data._id, status: orderStatus })
     }

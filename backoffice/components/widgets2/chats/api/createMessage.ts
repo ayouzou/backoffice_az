@@ -1,12 +1,11 @@
 
 
-const CREATE_PRODUCT_ENDPOINT = `http://localhost:3000/api/messages`
+const CREATE_PRODUCT_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/messages`
 
 export const createMessage = async (
   body: Record<string, string | string[] | number | boolean>,
 ) => {
   try {
-    
     const url = `${CREATE_PRODUCT_ENDPOINT}`;
     const response = await fetch(url, {
       method: "POST",

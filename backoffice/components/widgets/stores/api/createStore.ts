@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const CREATE_STORE_ENDPOINT = `http://localhost:3000/api/stores`;
+const CREATE_STORE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/stores`;
 
 export async function createStore(
   body: Record<string, string>,

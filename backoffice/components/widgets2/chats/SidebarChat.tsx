@@ -1,15 +1,14 @@
 import { Input } from '@/components/form-element/input'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { MessageCircleIcon, SearchIcon } from 'lucide-react'
 import Link from 'next/link'
-import React, { useState } from 'react'
-import { getCustomersByStoreSlug } from '../customers/api/getCustomersByStoreSlug'
+import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import useAuth from '@/hooks/useAuth'
 import { io } from "socket.io-client";
 import { getAllConversationBySlug } from './api/getAllConversationBySlug'
 import Conversations from './Conversations'
+
 const socket = io("http://localhost:3000")
 export type CustomerProps = {
     _id: string
@@ -22,7 +21,7 @@ export type CustomerProps = {
     last_login: string
 }
 
-const SidebarChat = ({setCurrentChat}: any) => {
+const SidebarChat = ({ setCurrentChat }: any) => {
     const router = useRouter()
     const { slug } = router.query
     const { auth } = useAuth()
@@ -47,13 +46,12 @@ const SidebarChat = ({setCurrentChat}: any) => {
             <div className="flex-1 overflow-auto ">
                 <div className="grid gap-1 p-2" >
                     {
-                        conversationInfo?.map((c: any) => (
-                            <div onClick={() => setCurrentChat(c)}>
+                        conversationInfo && conversationInfo?.map((c: any, index: number) => (
+                            <div onClick={() => setCurrentChat(c)} key={index}>
                                 <Conversations conversation={c} />
                             </div>
                         ))
                     }
-
                 </div>
             </div>
         </div>

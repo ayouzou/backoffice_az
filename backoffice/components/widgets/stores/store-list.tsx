@@ -22,13 +22,11 @@ export default function StoresList() {
                                 {storesData?.stores?.map((store) => (
                                     <div key={store.slug}>
                                         <CardsStores {...store} key={store._id} href={store.slug}  />
-                                        {/* <StoreCard {...store} key={store._id} href={store.slug} actions={['view']} /> */}
                                     </div>
                                 ))}
                             </div>
                         </section>
                     )
-
                 }
             </div >
         </div>
