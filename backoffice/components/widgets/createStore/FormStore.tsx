@@ -132,12 +132,12 @@ export default function FormStore() {
                                                 <RadioGroup onValueChange={field.onChange}
                                                     defaultValue={field.value} className="flex items-center justify-evenly">
                                                     <div className=" space-x-2 border rounded-md p-4 cursor-pointer">
-                                                        <img src="" alt="XMTA" width={200} height={150} className="w-full h-auto" />
+                                                        <img src="https://res.cloudinary.com/dbtwal7ju/image/upload/v1719170016/dsbsuw4p116ynjpxmo0t.png" alt="XMTA" width={200} height={150} className="w-full h-auto" />
                                                         <RadioGroupItem value="XMTA" id="option-one" />
                                                         <FormLabel htmlFor="option-one">XMTA</FormLabel>
                                                     </div>
                                                     <div className=" space-x-2  border rounded-md p-4 cursor-pointer">
-                                                        <img src="" alt="RAYBAN" width={200} height={150} className="w-full h-auto" />
+                                                        <img src="https://res.cloudinary.com/dbtwal7ju/image/upload/v1719170020/ig6nnuvnkc4khxibkbzh.png" alt="RAYBAN" width={200} height={150} className="w-full h-auto" />
                                                         <RadioGroupItem value="RAYBAN" id="option-one" />
                                                         <FormLabel htmlFor="option-one">RayBan</FormLabel>
                                                     </div>
@@ -165,20 +165,20 @@ export default function FormStore() {
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 gap-4">
-                                <div className="border rounded-md p-4">
-                                    <img src="" alt="RAYBAN" width={400} height={200} className="w-full h-auto" />
+                                <Link href={'https://temp-1-az.vercel.app/az'} target="_blank" className="border rounded-md p-4">
+                                    <img src="https://res.cloudinary.com/dbtwal7ju/image/upload/v1719170016/dsbsuw4p116ynjpxmo0t.png" alt="RAYBAN" width={400} height={200} className="w-full h-auto" />
                                     <div className="mt-4">
                                         <h3 className="text-lg font-bold">RAYBAN</h3>
                                         <p className="text-muted-foreground">A clean and modern design.</p>
                                     </div>
-                                </div>
-                                <div className="border rounded-md p-4">
-                                    <img src="" alt="XMTA" width={400} height={200} className="w-full h-auto" />
+                                </Link>
+                                <Link href={'https://niftables-assignment.vercel.app/'} target="_blank" className="border rounded-md p-4">
+                                    <img src="https://res.cloudinary.com/dbtwal7ju/image/upload/v1719170020/ig6nnuvnkc4khxibkbzh.png" alt="XMTA" width={400} height={200} className="w-full h-auto" />
                                     <div className="mt-4">
                                         <h3 className="text-lg font-bold">XMTA</h3>
                                         <p className="text-muted-foreground">A vibrant and eye-catching design.</p>
                                     </div>
-                                </div>
+                                </Link>
                             </div>
                         </CardContent>
                     </Card>
