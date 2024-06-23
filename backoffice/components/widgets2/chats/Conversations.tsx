@@ -25,7 +25,7 @@ const Conversations = (conversation: any) => {
             </Avatar>
             <div className="flex-1 truncate">
                 <div className="font-medium">{users?.username}</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400 truncate">Hey, how's it going?</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 truncate">Hey, how is it going?</div>
             </div>
             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-white text-xs font-medium">
                 3
