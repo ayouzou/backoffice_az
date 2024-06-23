@@ -5,11 +5,11 @@ import useAuth from '@/hooks/useAuth'
 import { format } from 'timeago.js'
 import { MoveHorizontalIcon, PhoneIcon, SendIcon, VideoIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { io } from "socket.io-client";
+
 import { getMessagesById } from './api/getMessageById'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createMessage } from './api/createMessage'
-const socket = io("http://localhost:3000")
+
 
 type messageProps = {
     text: string,

@@ -5,11 +5,10 @@ import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import useAuth from '@/hooks/useAuth'
-import { io } from "socket.io-client";
+
 import { getAllConversationBySlug } from './api/getAllConversationBySlug'
 import Conversations from './Conversations'
 
-const socket = io("http://localhost:3000")
 export type CustomerProps = {
     _id: string
     username: string;
