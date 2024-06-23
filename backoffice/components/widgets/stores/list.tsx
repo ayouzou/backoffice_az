@@ -12,27 +12,34 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 // import LayoutDash from '@/components/layout/layout'
 import StoresList from './store-list'
 import { StoreForm } from './forms/form'
+import { UserNav } from '../user-nav'
+import Link from 'next/link'
 
 
 
 
 export default function StoresListPage() {
+
     return (
         <SessionProvider>
-                <Card className="w-full">
-                    <CardHeader>
-                        <div className="flex items-center justify-between">
-                            <CardTitle>Stores</CardTitle>
-                            <CreateStorePopUp />
+            <Card className="w-full">
+                <CardHeader>
+                    <div className="flex items-center justify-between">
+                        <CardTitle>Stores</CardTitle>
+                        <div className='flex items-center gap-6'>
+                            <Link href='/create-store' className='bg-black text-white px-2 py-3 rounded-lg'>Create Store</Link>
+                            {/* <CreateStorePopUp /> */}
+                            <UserNav />
                         </div>
-                        <CardDescription>
-                            You made 265 sales this month.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <StoresList /> 
-                    </CardContent>
-                </Card>
+                    </div>
+                    <CardDescription>
+                        this is your Stores
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <StoresList />
+                </CardContent>
+            </Card>
         </SessionProvider>
     )
 }

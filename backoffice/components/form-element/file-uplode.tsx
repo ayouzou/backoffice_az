@@ -46,7 +46,6 @@ const FileUpload = ({ id, name, label, placeholder, setUploadedAssets, multiple 
             return urlData
         } catch (e) {
             setUploadingImg(false)
-            console.log(e)
         }
     }
 
@@ -91,7 +90,6 @@ const FileUpload = ({ id, name, label, placeholder, setUploadedAssets, multiple 
                     </CardHeader>
                     <CardContent>
                         {selectedFiles.map((file, i) => {
-                            console.log(file)
                             return (
                                 <div key={i} className="flex flex-wrap gap-2 text-violet-900 whitespace-nowrap">
                                     {blobs?.map((blob, i, arr) => {

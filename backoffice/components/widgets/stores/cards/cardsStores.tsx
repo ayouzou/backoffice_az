@@ -51,7 +51,7 @@ export default function CardsStores({ _id, name, description, created_at, catego
                     <span className="text-sm text-gray-500 dark:text-gray-400">{template}</span>
                 </div>
                 <div className="flex justify-between">
-                    <Link className="text-primary hover:underline" href={`/store/${href}`}>
+                    <Link className="text-black font-bold hover:underline " href={`/store/${href}`}>
                         Visit Store
                     </Link>
                     <span className="text-sm text-gray-500 dark:text-gray-400"> {formatDate(created_at as string)}</span>

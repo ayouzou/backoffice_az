@@ -26,7 +26,7 @@ export default function LayoutDash({ children }: { children: React.ReactNode }) 
                     </div>
                 </div>
             </div>
-            <div className="flex p-4">
+            <div className="flex p-4  ">
                 <Sidebar />
                 {children}
             </div>

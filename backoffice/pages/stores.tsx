@@ -4,10 +4,7 @@ import useAuth from '@/hooks/useAuth'
 import React from 'react'
 
 const stores = () => {
-  const { auth } = useAuth()
-  if (!auth.isAuthenticated) {
-    // window.location.href='/login'
-  }
+ 
   return (
     <>
       <StoresListPage />

@@ -2,39 +2,41 @@ import { jwtDecode } from "jwt-decode";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { loginFormSchema } from "./schema"
+import { registerFormSchema } from "./schema"
 import { Button } from "@/components/form-element/button"
-import {   Form, FormControl, FormDescription,    FormField,FormItem,FormLabel,FormMessage} from "@/components/ui/form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/form-element/input"
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import useAuth from "@/hooks/useAuth";
 import { storeCookie } from "@/lib/auth";
-export function LoginForm() {
+export function Register() {
     const { toast } = useToast()
     const { auth } = useAuth()
 
-    const form = useForm<z.infer<typeof loginFormSchema>>({
-        resolver: zodResolver(loginFormSchema),
+    const form = useForm<z.infer<typeof registerFormSchema>>({
+        resolver: zodResolver(registerFormSchema),
         defaultValues: {
+            firstName:"",
+            lastName:"",
+            username:"",
             email: "",
             password: "",
         },
     })
     const [isLoading, setIsLoading] = useState(false)
-    async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+    async function onSubmit(values: z.infer<typeof registerFormSchema>) {
         setIsLoading(true);
-        const { email, password } = values;
-        // const API = 'http://localhost:3000/api'
+        const { firstName, lastName, username,email, password } = values;
         const API = `${process.env.NEXT_PUBLIC_API_URL}`
 
         try {
-            const response = await fetch(`${API}/users/login`, {
+            const response = await fetch(`${API}/users`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ firstName, lastName, username, email, password })
             });
             const data = await response.json() as { token: string, message: string };
 
@@ -52,7 +54,7 @@ export function LoginForm() {
                 storeCookie('token', data.token);
                 toast({
                     variant: "default",
-                    title: "Login success",
+                    title: "Register success",
                 })
             }
 
@@ -76,7 +78,48 @@ export function LoginForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+                <div className="flex gap-3">
+                    <FormField
+                        control={form.control}
+                        name="firstName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>FirstName</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="FirstName" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="lastName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>LastName</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="LastName" {...field}  />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+                <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Username</FormLabel>
+                            <FormControl>
+                                <Input placeholder="username" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                 <FormField
                     control={form.control}
                     name="email"
@@ -106,7 +149,7 @@ export function LoginForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={isLoading} isLoading={isLoading} className="px-10">Login</Button>
+                <Button className="px-10" type="submit" disabled={isLoading} isLoading={isLoading}>Register</Button>
             </form>
         </Form>
     )
