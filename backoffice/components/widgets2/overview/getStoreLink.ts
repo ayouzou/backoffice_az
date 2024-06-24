@@ -12,10 +12,10 @@
 export const getStoreLink = (template: 'RAYBAN' | 'XMTA', slug: string) => {
     switch (template) {
         case 'RAYBAN':
-            return `https://temp-1-az.vercel.app/${slug}`
+            return `http://temp-1-az.vercel.app/${slug}`
         case 'XMTA':
             return `https://temp-1-az.vercel.app/${slug}`
         default:
-            return `https://temp-1-az.vercel.app/${slug}`
+            return `http://temp-1-az.vercel.app/${slug}`
     }
 }
