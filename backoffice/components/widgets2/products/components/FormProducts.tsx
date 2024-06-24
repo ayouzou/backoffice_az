@@ -23,6 +23,7 @@ import { IoHome } from 'react-icons/io5'
 const FormProducts = () => {
     const [uploadedAssets, setUploadedAssets] = useState<string[]>([])
     const form = useForm<z.infer<typeof schema>>({ resolver: zodResolver(schema) })
+    const {reset} =useForm<z.infer<typeof schema>>({ resolver: zodResolver(schema) })
     const { auth } = useAuth()
     const router = useRouter()
     const { slug } = router.query
@@ -33,11 +34,10 @@ const FormProducts = () => {
         }, onSettled(res) {
             if (!res?.error) {
                 queryClient.invalidateQueries({ queryKey: ['STORE_PRODUCTS', slug] })
+                reset()
             }
         }
     })
-
-
     const submitData = (data: z.infer<typeof schema>) => {
         return mutate({
             ...data,
@@ -63,9 +63,7 @@ const FormProducts = () => {
                                                 <label>Product Name</label>
                                                 <Input {...field} />
                                                 <FormMessage />
-                                            </FormItem>)}
-                                    />
-
+                                            </FormItem>)} />
                                 </div>
                                 <div className='flex gap-4 mt-4'>
                                     <div className='w-full flex flex-col gap-y-2'>
@@ -169,10 +167,10 @@ const FormProducts = () => {
                                         control={form.control}
                                         name="is_active"
                                         render={({ field }) => {
-                                            const { onChange } = field
+                                            // const { onChange } = field
                                             return (
                                                 <>
-                                                    <Switch id="active" {...field} onCheckedChange={onChange} />
+                                                    <Switch  {...field} onCheckedChange={field.onChange} />
                                                     <Label htmlFor="active">Active</Label>
                                                 </>
                                             )
