@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const GET_REVIEWS_PRODUCT_ENDPOINT_BY_ID = `https://server-ecom2.onrender.com/api/reviews`;
+const GET_REVIEWS_PRODUCT_ENDPOINT_BY_ID = `${process.env.NEXT_PUBLIC_API_URL}/reviews`;
 
 export async function getReviewsProduct(
   body: Record<string, any>,

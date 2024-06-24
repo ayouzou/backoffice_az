@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const CREATE_PRODUCT_ENDPOINT = `http://localhost:3000/api/products`
+const CREATE_PRODUCT_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/products`
 
 export const createProduct = async (
   body: Record<string, string | string[] | number | boolean>,

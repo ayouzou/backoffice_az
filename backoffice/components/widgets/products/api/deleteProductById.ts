@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const DELETE_PRODUCT_ENDPOINT = `http://localhost:3000/api/products`;
+const DELETE_PRODUCT_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/products`;
 
 export const deleteProductById = async (
   body: Record<string, string>,

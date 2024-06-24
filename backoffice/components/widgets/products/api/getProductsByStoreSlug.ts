@@ -1,6 +1,6 @@
 import { Session } from "../../../../types/auth";
 
-const GET_PRODUCTS_BY_STORE_ENDPOINT = `http://localhost:3000/api/products`;
+const GET_PRODUCTS_BY_STORE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/products`;
 
 type Product = {
   reviews: string[];
