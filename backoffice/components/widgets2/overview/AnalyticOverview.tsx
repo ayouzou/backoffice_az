@@ -14,7 +14,7 @@ const AnalyticOverview = () => {
     const router = useRouter()
     const { slug } = router.query
 
-    const { data: storeInfoData } = useQuery({ queryKey: ['STORE_INFO', slug], queryFn: () => getStoreBySlug(slug , auth) })
+    const { data: storeInfoData } = useQuery({ queryKey: ['STORE_INFO', slug], queryFn: () => getStoreBySlug({ slug }, auth) })
     const { data: productsData} = useQuery({ queryKey: ['STORE_PRODUCTS', slug], queryFn: () => getProductsByStoreSlug(slug, auth) })
     const { data: customers } = useQuery({ queryKey: ['STORE_CUSTOMERS', slug], queryFn: () => getCustomersByStoreSlug(slug, auth) })
     const storeId = storeInfoData?.storeInfo?.store?._id as string

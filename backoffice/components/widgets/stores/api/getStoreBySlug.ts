@@ -15,10 +15,10 @@ type Store = {
     address: string;
     template: "XMTA" | "RAYBAN";
 };
-export async function getStoreBySlug(slug: any , session: Session) {
+export async function getStoreBySlug(body: { slug: any }, session: Session) {
     try {
         if (!session?.user?.token) throw new Error("Unauthorized");
-        // const slug: string = body.slug;
+        const slug: string = body.slug;
         const token = session.user.token;
         const url = `${GET_STORES_ENDPOINT_BY_ID}/${slug}`;
         const response = await fetch(url, {
