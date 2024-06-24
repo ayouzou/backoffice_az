@@ -25,9 +25,9 @@ const SidebarChat = ({ setCurrentChat }: any) => {
     const { slug } = router.query
     const { auth } = useAuth()
 
-    const { data: conversationInfo } = useQuery({ queryKey: ['CONVERSATION_INFO', slug], queryFn: () => getAllConversationBySlug(slug) })
+    const { data: conversationInfo, isLoading } = useQuery({ queryKey: ['CONVERSATION_INFO', slug], queryFn: () => getAllConversationBySlug(slug) })
     return (
-        <div className="flex flex-col border-r bg-gray-100/40 h-[48rem]">
+        <div className="flex flex-col border-l-2   h-[48rem]">
             <div className="flex flex-col  h-[80px] items-center justify-between px-6">
                 <Link href="#" className="flex items-center py-2 gap-2 font-semibold" prefetch={false}>
                     <MessageCircleIcon className="h-6 w-6" />
@@ -42,19 +42,35 @@ const SidebarChat = ({ setCurrentChat }: any) => {
                     />
                 </div>
             </div>
-            <div className="flex-1 overflow-auto ">
-                <div className="grid gap-1 p-2" >
-                    {
-                        conversationInfo && conversationInfo?.map((c: any, index: number) => (
-                            <div onClick={() => setCurrentChat(c)} key={index}>
-                                <Conversations conversation={c} />
-                            </div>
-                        ))
-                    }
-                </div>
+            <div className="flex-1 overflow-auto  ">
+                {
+                    isLoading ? <Loading_ />
+                        : <div className="grid gap-1 p-2 " >
+                            {
+                                conversationInfo && conversationInfo?.map((c: any, index: number) => (
+                                    <div onClick={() => setCurrentChat(c)} key={index}>
+                                        <Conversations conversation={c} />
+                                    </div>
+                                ))
+                            }
+                        </div>
+                }
+
             </div>
         </div>
     )
 }
 
 export default SidebarChat
+
+
+const Loading_ = () => {
+    return (
+        <div className="flex items-center absolute top-96 right-[5rem]  justify-center">
+            <div className="flex items-center  justify-center space-x-2">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+                <span className="text-primary font-medium">Loading...</span>
+            </div>
+        </div>
+    )
+}

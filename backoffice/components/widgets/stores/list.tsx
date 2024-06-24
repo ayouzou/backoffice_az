@@ -22,7 +22,7 @@ export default function StoresListPage() {
 
     return (
         <SessionProvider>
-            <Card className="w-full">
+            <Card className="w-full h-screen">
                 <CardHeader>
                     <div className="flex items-center justify-between">
                         <CardTitle>Stores</CardTitle>

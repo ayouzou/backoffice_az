@@ -9,10 +9,10 @@ export default function LayoutChats() {
 
     const [currentChat, setCurrentChat] = useState<any>(null)
     const conversationId = currentChat?._id
-    const { data: messagesInfo } = useQuery({ queryKey: ['MESSAGES_INFO_2', conversationId], queryFn: () => getMessagesById({ conversationId }) })
+    const { data: messagesInfo ,isLoading } = useQuery({ queryKey: ['MESSAGES_INFO_2', conversationId], queryFn: () => getMessagesById({ conversationId }) })
     return (
         <div className="grid w-full grid-cols-[950px_1fr]">
-            <MainChats currentChat={currentChat} messagesInfo={messagesInfo} />
+            <MainChats currentChat={currentChat} isLoading={isLoading} messagesInfo={messagesInfo} />
             <SidebarChat setCurrentChat={setCurrentChat} />
         </div>
     )

@@ -16,6 +16,6 @@ export const getStoreLink = (template: 'RAYBAN' | 'XMTA', slug: string) => {
         case 'XMTA':
             return `https://temp-1-az.vercel.app/${slug}`
         default:
-            return `https://www.google.com/`
+            return `https://temp-1-az.vercel.app/${slug}`
     }
 }
