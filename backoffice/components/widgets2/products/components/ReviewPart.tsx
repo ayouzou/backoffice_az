@@ -9,7 +9,6 @@ import UsernameCustomer from './usernameCustomer'
 
 const ReviewPart = ({ slug, description }: any) => {
     const { data: productData, refetch: refetchReviews } = useQuery({ queryKey: ['REVIEW_ID_PRODUCT', slug], queryFn: () => getReviewsProduct({ slug }) })
-    console.log(productData)
     return (
         <div >
             <Tabs defaultValue="reviews" className="w-full p-5  ">

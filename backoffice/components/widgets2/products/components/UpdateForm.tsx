@@ -31,12 +31,11 @@ const UpdateForm = () => {
   const { slug, id } = router.query
   const queryClient = useQueryClient()
   const { data: productData } = useQuery({ queryKey: ['PRODUCT_ID', id], queryFn: () => getProductById(id) })
-  console.log("productData", productData)
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
-      product_name: productData?.data?.product_name || '',
-      price: productData?.data?.price || 0,
+      product_name: productData?.data?.product_name as string || '',
+      price: productData?.data?.price || 0 as number,
       quantity_available: productData?.data?.quantity_available || 0,
       colors: productData?.data?.colors || [],
       sizes: productData?.data?.sizes || [],
@@ -52,14 +51,17 @@ const UpdateForm = () => {
     onSettled(res) {
       if (!res?.error) {
         queryClient.invalidateQueries({ queryKey: ['PRODUCT_ID', id] })
+        // window.location.href =`/store/${slug}/products2`
+        router.push(`/store/${slug}/products2`) 
       }
     }
   })
 
   const submitData = (data: z.infer<typeof schema>) => {
+    const images = uploadedAssets
     return mutate({
       ...data,
-      images: uploadedAssets || productData?.data?.images,
+      images: images || productData?.data?.images as string[],
       id: id,
     })
   }
@@ -155,7 +157,7 @@ const UpdateForm = () => {
                       const { onChange } = field
                       return (
                         <FormItem>
-                          <ToggleGroup type="multiple" {...field} defaultValue={productData?.data?.sizes} onValueChange={onChange}>
+                          <ToggleGroup type="multiple" {...field}  onValueChange={onChange} defaultValue={productData?.data?.sizes}>
                             Size :
                             <ToggleGroupItem value="xs" aria-label="Toggle xs">
                               Xs
@@ -229,7 +231,7 @@ const UpdateForm = () => {
                     render={({ field }) => (
                       <FormItem>
                         <Label htmlFor="Description">Description</Label>
-                        <Textarea className='resize-none' {...field} placeholder="Type your message here." />
+                        <Textarea className='resize-none' {...field} defaultValue={productData?.data?.description} placeholder="Type your description here." />
                       </FormItem>
                     )}
                   />

@@ -48,8 +48,6 @@ export default function FormUpdateStore() {
     })
     function onSubmit(values: z.infer<typeof storeFormSchema>) {
         const logo = uploadedAssets[uploadedAssets.length - 1]
-        console.log("logo", logo)
-        console.log("values", values)
         return mutate({
             ...values,
             id: storeInfoData?.storeInfo?.store?._id as string,

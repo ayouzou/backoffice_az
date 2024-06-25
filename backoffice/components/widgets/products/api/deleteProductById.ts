@@ -8,7 +8,6 @@ export const deleteProductById = async (
 ) => {
   try {
     if (!session.user?.token) throw new Error("No token found");
-    console.log(session);
     const url = `${DELETE_PRODUCT_ENDPOINT}`;
     const response = await fetch(url, {
       method: "DELETE",
@@ -19,8 +18,7 @@ export const deleteProductById = async (
       },
     });
     if (!response.ok) throw new Error("Error deleting product in store");
-    // const data = await response.json();
-    // console.log("data", data);
+     const data = await response.json();
     return { error: null };
   } catch (error) {
     console.error(error);

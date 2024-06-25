@@ -23,7 +23,6 @@ export type Product = {
 
 };
 export const getProductById = async (id: any) => {
-    console.log("id", id)
     try {
         const url = `${GET_PRODUCTS_BY_STORE_ENDPOINT}/${id}`;
         const response = await fetch(url, {
