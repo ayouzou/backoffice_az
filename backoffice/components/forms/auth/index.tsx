@@ -25,7 +25,6 @@ export function LoginForm() {
     async function onSubmit(values: z.infer<typeof loginFormSchema>) {
         setIsLoading(true);
         const { email, password } = values;
-        // const API = 'http://localhost:3000/api'
         const API = `${process.env.NEXT_PUBLIC_API_URL}`
 
         try {

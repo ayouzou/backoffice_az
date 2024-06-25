@@ -80,7 +80,6 @@ const UpdateForm = () => {
                       <FormItem>
                         <label>Product Name</label>
                         <Input {...field} defaultValue={productData?.data?.product_name} />
-                        {productData?.data?.product_name}
                         <FormMessage />
                       </FormItem>)}
                   />

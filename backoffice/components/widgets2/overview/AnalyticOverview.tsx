@@ -9,16 +9,20 @@ import useAuth from '@/hooks/useAuth'
 import { BsChatSquareDots } from 'react-icons/bs'
 import { getCustomersByStoreSlug } from '@/components/widgets2/customers/api/getCustomersByStoreSlug'
 import { DollarSignIcon, ShoppingCartIcon, UsersIcon } from 'lucide-react'
+import Loading from '@/components/Loading/Loading'
 const AnalyticOverview = () => {
     const { auth } = useAuth()
     const router = useRouter()
     const { slug } = router.query
 
-    const { data: storeInfoData } = useQuery({ queryKey: ['STORE_INFO', slug], queryFn: () => getStoreBySlug({ slug }, auth) })
+    const { data: storeInfoData ,isLoading } = useQuery({ queryKey: ['STORE_INFO', slug], queryFn: () => getStoreBySlug({ slug }, auth) })
     const { data: productsData} = useQuery({ queryKey: ['STORE_PRODUCTS', slug], queryFn: () => getProductsByStoreSlug(slug, auth) })
     const { data: customers } = useQuery({ queryKey: ['STORE_CUSTOMERS', slug], queryFn: () => getCustomersByStoreSlug(slug, auth) })
     const storeId = storeInfoData?.storeInfo?.store?._id as string
     const { data: orders } = useQuery({ queryKey: ['STORE_ORDERS', storeId], queryFn: () => getOrdersByStoreId({ storeId }, auth) })
+    if(isLoading){
+        return <Loading/> 
+    }
     return (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card>
