@@ -15,7 +15,7 @@ export default function Landing() {
           <Link href="/login" className="text-sm font-medium hover:underline underline-offset-4 bg-black text-white px-3 py-2 rounded-md" prefetch={false}>
             Login
           </Link>
-          <Link href="#" className="text-sm font-medium hover:underline underline-offset-4 bg-black text-white px-3 py-2 rounded-md" prefetch={false}>
+          <Link href="/register" className="text-sm font-medium hover:underline underline-offset-4 bg-black text-white px-3 py-2 rounded-md" prefetch={false}>
             Register
           </Link>
         </nav>

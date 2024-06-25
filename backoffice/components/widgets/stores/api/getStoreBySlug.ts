@@ -1,6 +1,8 @@
 import { Session } from "../../../../types/auth";
 
 const GET_STORES_ENDPOINT_BY_ID = `${process.env.NEXT_PUBLIC_API_URL}/stores`;
+// const GET_STORES_ENDPOINT_BY_ID = `http://localhost:3000/api/stores`;
+
 
 type Store = {
     _id: string;
@@ -20,7 +22,7 @@ export async function getStoreBySlug(body: { slug: any }, session: Session) {
         if (!session?.user?.token) throw new Error("Unauthorized");
         const slug: string = body.slug;
         const token = session.user.token;
-        const url = `${GET_STORES_ENDPOINT_BY_ID}/${slug}`;
+        const url = `${GET_STORES_ENDPOINT_BY_ID}/${slug}?userId=${session.user.id}`;
         const response = await fetch(url, {
             method: "GET",
             headers: {
@@ -31,9 +33,7 @@ export async function getStoreBySlug(body: { slug: any }, session: Session) {
         if (!response.ok) {
             throw new Error();
         }
-        const storeInfo: {
-            store: Store;
-        } = await response.json();
+        const storeInfo: { store: Store;} = await response.json();
         return { storeInfo, error: null };
     } catch (error) {
         return {
