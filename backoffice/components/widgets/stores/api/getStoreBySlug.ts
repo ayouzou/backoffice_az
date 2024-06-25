@@ -22,7 +22,7 @@ export async function getStoreBySlug(body: { slug: any }, session: Session) {
         if (!session?.user?.token) throw new Error("Unauthorized");
         const slug: string = body.slug;
         const token = session.user.token;
-        const url = `${GET_STORES_ENDPOINT_BY_ID}/${slug}?userId=${session.user.id}`;
+        const url = `${GET_STORES_ENDPOINT_BY_ID}/${slug}/backoffice?userId=${session.user.id}`;
         const response = await fetch(url, {
             method: "GET",
             headers: {

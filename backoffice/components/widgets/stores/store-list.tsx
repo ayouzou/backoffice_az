@@ -14,7 +14,7 @@ export default function StoresList() {
             <div className="flex flex-col items-center gap-2">
                 {!storesData || isLoading ? <Loading/> :
                     (
-                        <section className="container  px-4 py-12 md:px-6 lg:py-16">
+                        <section className="container px-4 py-12 md:px-6 lg:py-16">
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 ">
                                 {storesData?.stores?.map((store) => (
                                     <div key={store.slug}>

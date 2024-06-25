@@ -25,16 +25,16 @@ function formatDate(date: string) {
 export default function CardsStores({ _id, name, description, created_at, category, address, template, href, logo }: Props) {
     return (
         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
-            <img
+            <div className="bg-slate-200">
+                     <img
                 alt="Store Image"
                 className="w-full h-48 object-cover"
                 height={300}
                 src={logo}
-                style={{
-                    aspectRatio: "400/300",
-                    objectFit: "cover",
-                }}
+                style={{aspectRatio: "400/300",objectFit: "cover",}}
                 width={400} />
+            </div>
+       
             <div className="p-4">
                 <h3 className="text-lg font-semibold mb-2">{name}</h3>
                 <p className="text-gray-500 dark:text-gray-400 mb-2">{description}.</p>

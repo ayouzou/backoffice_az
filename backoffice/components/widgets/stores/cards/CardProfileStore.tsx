@@ -22,7 +22,7 @@ const CardProfileStore = () => {
                             <div className="md:flex">
                                 <div className="md:w-1/3 bg-gray-100 dark:bg-gray-800 p-8 flex items-center justify-center">
                                     <div className="text-center">
-                                        <div className="inline-block  dark:text-gray-900 text-white rounded-full p-4">
+                                        <div className="inline-block bg-black dark:text-gray-900 text-white rounded-full p-4">
                                             <img src={store?.logo} className="w-20 h-20 rounded-full" />
                                         </div>
                                         <h2 className="text-2xl font-bold mt-4">{store?.name}</h2>
