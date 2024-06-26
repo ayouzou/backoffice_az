@@ -4,10 +4,14 @@ import React, { useState } from 'react'
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa'
 import { BsChatSquareDots } from "react-icons/bs";
 import { MdDashboardCustomize } from 'react-icons/md';
+import { EyeIcon, HeartOff } from 'lucide-react';
+import { TbElevator } from 'react-icons/tb';
 
 const Sidebar = () => {
     const router = useRouter()
-    const [openProduct, setOpenProduct] = useState(true)
+    const [openProduct, setOpenProduct] = useState(false)
+    const [openStore, setOpenStore] = useState(false)
+
     return (
         <div className='w-60  h-[48rem] border-r-2 '>
             <nav className="flex flex-col gap-y-4 mt-4 items-start px-4 text-sm font-medium">
@@ -63,11 +67,36 @@ const Sidebar = () => {
                     <BsChatSquareDots className="h-4 w-4" />
                     Chats
                 </Link>
-                <Link className="flex items-center gap-3 rounded-lg px-10 pl-4 py-2 text-gray-900 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                    href={`/store/${router.query.slug}/apperances`}>
-                    <MdDashboardCustomize className="h-4 w-4" />
-                    Apperances
-                </Link>
+                <div className='w-full'>
+                    <div className='flex items-center justify-between w-full ' onClick={() => setOpenStore(!openStore)}>
+                        <div className='flex items-center w-full  gap-3 rounded-lg px-6 pl-4 py-2 text-gray-900 transition-all hover:text-gray-900 '>
+                            <PackageIcon className="h-4 w-4" />
+                            Online Store
+                        </div>
+                        <Link href={`http://temp-1-az.vercel.app/${router.query.slug}`} target='_blank'> 
+
+                            <EyeIcon className='text-gray-600 hover:text-gray-800' />
+                        </Link>
+
+
+                    </div>
+                    {
+                        openStore ?
+                            <>
+                                <Link
+                                    className="flex items-center gap-3 hover:underline rounded-lg px-6 py-2 text-gray-900 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                                    href={`#`}>
+                                    <TbElevator className="h-4 w-4" />
+                                    Hero Page
+                                </Link>
+                                <Link
+                                    className="flex items-center gap-3 rounded-lg px-5 hover:underline py-2 text-gray-900 transition-all hover:text-gray-900 "
+                                    href={`#`}>
+                                    <PackageIcon className="h-4 w-4" />  Products Cards
+                                </Link>
+                            </> : ''
+                    }
+                </div>
             </nav>
         </div>
     )
