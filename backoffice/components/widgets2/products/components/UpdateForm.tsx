@@ -12,7 +12,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
-import { schema } from './schema'
+// import { schema } from './schema'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import useAuth from '@/hooks/useAuth'
@@ -23,7 +23,16 @@ import { updateProductById } from '@/components/widgets/products/api/updateProdu
 import { IoHome } from 'react-icons/io5'
 import { FaChevronRight } from 'react-icons/fa'
 import Link from 'next/link'
-
+const schema = z.object({
+  product_name: z.string().min(3).max(100),
+  price: z.any(),
+  quantity_available: z.any(),
+  sizes: z.array(z.string()).optional(),
+  colors: z.array(z.string()).optional(),
+  is_active: z.any(),
+  description: z.string().min(10).max(10000),
+  category: z.string()
+})
 const UpdateForm = () => {
   const [uploadedAssets, setUploadedAssets] = useState<string[]>([])
   const { auth } = useAuth()
@@ -35,7 +44,7 @@ const UpdateForm = () => {
     resolver: zodResolver(schema),
     defaultValues: {
       product_name: productData?.data?.product_name as string || '',
-      price: productData?.data?.price || 0 as number,
+      price: productData?.data?.price || 0 ,
       quantity_available: productData?.data?.quantity_available || 0,
       colors: productData?.data?.colors || [],
       sizes: productData?.data?.sizes || [],
@@ -51,19 +60,29 @@ const UpdateForm = () => {
     onSettled(res) {
       if (!res?.error) {
         queryClient.invalidateQueries({ queryKey: ['PRODUCT_ID', id] })
-        // window.location.href =`/store/${slug}/products2`
-        router.push(`/store/${slug}/products2`) 
+        router.push(`/store/${slug}/products2`)
       }
     }
   })
 
   const submitData = (data: z.infer<typeof schema>) => {
     const images = uploadedAssets
-    return mutate({
-      ...data,
-      images: images || productData?.data?.images as string[],
-      id: id,
-    })
+    const imagesTable = productData?.data?.images
+
+    if (images.length > 0) {
+      return mutate({
+        ...data,
+        images: images,
+        id: id,
+      })
+    } else {
+      return mutate({
+        ...data,
+        images: imagesTable,
+        id: id,
+      })
+    }
+
   }
   return (
     <Form {...form} >
@@ -72,7 +91,7 @@ const UpdateForm = () => {
         <div className='flex gap-2 items-center px-3 ml-3 mt-3'><IoHome /> <Link href={`/store/${slug}`}>Dashboard</Link> <FaChevronRight /> <h2>All Products</h2></div>
         <form onSubmit={form.handleSubmit(submitData)}>
           <div className='flex p-8 gap-5 '>
-            <div className='w-[800px] h-[45rem] bg-white shadow-lg'>
+            <div className='w-[800px] h-[40rem] bg-white shadow-lg'>
               <div className='m-4 mt-1'>
                 <div className='w-full flex flex-col gap-y-2'>
                   <FormField
@@ -96,7 +115,7 @@ const UpdateForm = () => {
                         <FormItem>
                           <label>Product Price</label>
                           <FormControl>
-                            <Input {...field} defaultValue={productData?.data?.price} />
+                            <Input {...field} defaultValue={productData?.data?.price}  type='number'/>
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -111,7 +130,7 @@ const UpdateForm = () => {
                         <FormItem>
                           <label>Product Qte</label>
                           <FormControl>
-                            <Input {...field} defaultValue={productData?.data?.quantity_available} />
+                            <Input {...field} defaultValue={productData?.data?.quantity_available} type='number'/>
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -157,7 +176,7 @@ const UpdateForm = () => {
                       const { onChange } = field
                       return (
                         <FormItem>
-                          <ToggleGroup type="multiple" {...field}  onValueChange={onChange} defaultValue={productData?.data?.sizes}>
+                          <ToggleGroup type="multiple" {...field} onValueChange={onChange} defaultValue={productData?.data?.sizes}>
                             Size :
                             <ToggleGroupItem value="xs" aria-label="Toggle xs">
                               Xs
@@ -198,7 +217,6 @@ const UpdateForm = () => {
                       )
                     }
                     } />
-
                 </div>
                 <div className='flex items-center mt-3 gap-14'>
                   <FormField
@@ -216,7 +234,7 @@ const UpdateForm = () => {
                               <SelectItem value="home">Home</SelectItem>
                               <SelectItem value="fashion">Fashion</SelectItem>
                               <SelectItem value="tech">Tech</SelectItem>
-                              <SelectItem value="cosmatics">Cosmatics</SelectItem>
+                              <SelectItem value="cosmatics">Cosmetics</SelectItem>
                             </SelectGroup>
                           </SelectContent>
                         </Select>
@@ -237,21 +255,22 @@ const UpdateForm = () => {
                   />
 
                 </div>
-                <h1 className='text-xl p-3 pb-0'>Product Image</h1>
-                <div className='m-4 mt-1'>
-                  <FileUpload name="logo" multiple={true} setUploadedAssets={setUploadedAssets} />
-                  <div className='mt-2 flex gap-3'>
-                    {productData?.data?.images?.map((img, index) => (
-                      <img src={img} alt="" className='w-10 h-10' key={index} />
-                    ))}
-                  </div>
+                <div className='mt-5 flex gap-3'>
+                  {productData?.data?.images?.map((img, index) => (
+                    <img src={img} alt="" className='w-20 h-20 hover:opacity-75' key={index} />
+                  ))}
                 </div>
+
               </div>
             </div>
-            <div className='w-[300px] h-full flex gap-3'>
+            <div className='w-[300px] h-full flex flex-col  gap-3'>
+              <h1 className='text-xl p-3 pb-0'>Upload Images</h1>
+              <div className='m-4 mt-1'>
+                <FileUpload name="logo" multiple={true} setUploadedAssets={setUploadedAssets} />
+              </div>
               <Button className='w-56'>Update</Button>
-              {/* <Button type='submit' className='w-44 bg-white text-black border hover:bg-gray-200'>Save as Draft</Button> */}
             </div>
+
           </div>
         </form>
       </div >

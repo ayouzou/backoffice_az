@@ -34,6 +34,7 @@ const FormProducts = () => {
         }, onSettled(res) {
             if (!res?.error) {
                 queryClient.invalidateQueries({ queryKey: ['STORE_PRODUCTS', slug] })
+                router.push(`/store/${slug}/products2`) 
                 reset()
             }
         }
@@ -74,7 +75,7 @@ const FormProducts = () => {
                                                 <FormItem>
                                                     <label>Product Price</label>
                                                     <FormControl>
-                                                        <Input {...field} type="number" />
+                                                        <Input {...field}  />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -89,7 +90,7 @@ const FormProducts = () => {
                                                 <FormItem>
                                                     <label>Product Qte</label>
                                                     <FormControl>
-                                                        <Input {...field} type="number" />
+                                                        <Input {...field}  />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
