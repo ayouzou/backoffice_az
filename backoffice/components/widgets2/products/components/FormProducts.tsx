@@ -23,7 +23,7 @@ import { IoHome } from 'react-icons/io5'
 const FormProducts = () => {
     const [uploadedAssets, setUploadedAssets] = useState<string[]>([])
     const form = useForm<z.infer<typeof schema>>({ resolver: zodResolver(schema) })
-    const {reset} =useForm<z.infer<typeof schema>>({ resolver: zodResolver(schema) })
+    const { reset } = useForm<z.infer<typeof schema>>({ resolver: zodResolver(schema) })
     const { auth } = useAuth()
     const router = useRouter()
     const { slug } = router.query
@@ -34,7 +34,7 @@ const FormProducts = () => {
         }, onSettled(res) {
             if (!res?.error) {
                 queryClient.invalidateQueries({ queryKey: ['STORE_PRODUCTS', slug] })
-                router.push(`/store/${slug}/products2`) 
+                router.push(`/store/${slug}/products2`)
                 reset()
             }
         }
@@ -53,7 +53,7 @@ const FormProducts = () => {
                 <div className='flex gap-2 items-center px-3 ml-3 mt-3'><IoHome /> <Link href={`/store/${slug}`}>Dashboard</Link> <FaChevronRight /> <h2>Create Products</h2></div>
                 <form onSubmit={form.handleSubmit(submitData)}>
                     <div className='flex p-8 gap-5 '>
-                        <div className='w-[800px] h-[45rem] bg-white shadow-lg'>
+                        <div className='w-[800px] h-[40rem] bg-white shadow-lg'>
                             <div className='m-4 mt-1'>
                                 <div className='w-full flex flex-col gap-y-2'>
                                     <FormField
@@ -75,7 +75,7 @@ const FormProducts = () => {
                                                 <FormItem>
                                                     <label>Product Price</label>
                                                     <FormControl>
-                                                        <Input {...field}  />
+                                                        <Input {...field} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -90,7 +90,7 @@ const FormProducts = () => {
                                                 <FormItem>
                                                     <label>Product Qte</label>
                                                     <FormControl>
-                                                        <Input {...field}  />
+                                                        <Input {...field} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -177,7 +177,6 @@ const FormProducts = () => {
                                             )
                                         }
                                         } />
-
                                 </div>
                                 <div className='flex items-center mt-3 gap-14'>
                                     <FormField
@@ -210,22 +209,26 @@ const FormProducts = () => {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <Label htmlFor="Description">Description</Label>
-                                                <Textarea className='resize-none' {...field} placeholder="Type your message here." />
+                                                <Textarea className='resize-none h-52' {...field} placeholder="Type your message here." />
                                             </FormItem>
                                         )}
                                     />
 
                                 </div>
-                                <h1 className='text-xl p-3 pb-0'>Product Image</h1>
-                                <div className='m-4 mt-1'>
-                                    <FileUpload name="logo" multiple={true} setUploadedAssets={setUploadedAssets} />
-                                </div>
+
                             </div>
                         </div>
-                        <div className='w-[300px] h-full flex gap-3'>
-                            <Button className='w-56'>Publish</Button>
-                            <Button type='submit' className='w-44 bg-white text-black border hover:bg-gray-200'>Save as Draft</Button>
+                        <div className='w-[350px] h-full flex flex-col er gap-3'>
+                            <div className='m-4 mt-1'>
+                                <h1 className='text-xl p-3 pb-0'>Product Image</h1>
+                                <FileUpload name="logo"  multiple={true} setUploadedAssets={setUploadedAssets} />
+                            </div>
+                            <div>
+                                <Button className='w-56 ml-5 '>Publish</Button>
+                            </div>
+
                         </div>
+
                     </div>
                 </form>
             </div >
