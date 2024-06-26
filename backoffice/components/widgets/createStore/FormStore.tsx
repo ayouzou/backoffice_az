@@ -171,7 +171,7 @@ export default function FormStore() {
                                         <p className="text-muted-foreground">A clean and modern design.</p>
                                     </div>
                                 </Link>
-                                <Link href={'https://niftables-assignment.vercel.app/'} target="_blank" className="border rounded-md p-4">
+                                <Link href={'#'} target="_blank" className="border rounded-md p-4">
                                     <img src="https://res.cloudinary.com/dbtwal7ju/image/upload/v1719170020/ig6nnuvnkc4khxibkbzh.png" alt="XMTA" width={400} height={200} className="w-full h-auto" />
                                     <div className="mt-4">
                                         <h3 className="text-lg font-bold">XMTA</h3>
