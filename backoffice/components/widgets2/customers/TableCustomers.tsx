@@ -1,16 +1,16 @@
 import { Button } from '@/components/form-element/button'
-
 import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import useAuth from '@/hooks/useAuth'
 import { useQuery } from '@tanstack/react-query'
-import { MessageCircleIcon, SearchIcon } from 'lucide-react'
+import { MessageCircleIcon } from 'lucide-react'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { getCustomersByStoreSlug } from './api/getCustomersByStoreSlug'
 import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import Loading from '@/components/Loading/Loading'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
 export type CustomerProps = {
     _id: string
@@ -32,14 +32,27 @@ function formatDate(date: string) {
     });
     return formatted;
 }
+
 const TableCustomers = () => {
     const { auth } = useAuth()
     const router = useRouter()
     const { slug } = router.query
     const { isLoading, data: customers } = useQuery({ queryKey: ['STORE_CUSTOMERS', slug], queryFn: () => getCustomersByStoreSlug(slug, auth) })
     const [search, setSearch] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const rowsPerPage = 7
 
     const filteredCustomers = customers?.data && customers?.data.filter((customer: CustomerProps) => customer.username.toLowerCase().includes(search.toLowerCase()))
+
+    const indexOfLastRow = currentPage * rowsPerPage
+    const indexOfFirstRow = indexOfLastRow - rowsPerPage
+    const currentRows = filteredCustomers?.slice(indexOfFirstRow, indexOfLastRow)
+
+    const pageNumbers = []
+    for (let i = 1; i <= Math.ceil((filteredCustomers?.length || 0) / rowsPerPage); i++) {
+        pageNumbers.push(i)
+    }
+
     return (
         <div className="w-full overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
             <div className="flex items-center gap-5 w-full max-w-md p-10 pb-0">
@@ -52,7 +65,7 @@ const TableCustomers = () => {
                 />
             </div>
             {
-                isLoading ? <Loading/> :
+                isLoading ? <Loading /> :
                     <div className="relative w-full overflow-auto p-10 pt-0">
                         <Table>
                             <TableHeader>
@@ -68,14 +81,14 @@ const TableCustomers = () => {
                             </TableHeader>
                             <TableBody>
                                 {
-                                    filteredCustomers?.map((customer: CustomerProps) => (
+                                    currentRows?.map((customer: CustomerProps) => (
                                         <TableRow key={customer._id}>
                                             <TableCell>
                                                 <div className="flex items-center gap-2">
-                                                    {/* <Avatar>
-                                                <img src="/placeholder.svg" alt="User Avatar" />
-                                                <AvatarFallback>JD</AvatarFallback>
-                                            </Avatar> */}
+                                                    <Avatar>
+                                                        {/* <img src="" alt="User Avatar" /> */}
+                                                        <AvatarFallback>JD</AvatarFallback>
+                                                    </Avatar>
                                                     <div className="grid gap-0.5 text-sm">
                                                         <div className="font-medium">{customer.email}</div>
                                                         <div className="text-gray-500 dark:text-gray-400">{customer.username}</div>
@@ -85,7 +98,7 @@ const TableCustomers = () => {
                                             <TableCell>{customer.username}</TableCell>
                                             <TableCell>
                                                 {
-                                                    customer.active ? <Badge variant="default">Active</Badge> : <Badge variant="destructive">no-Active</Badge>
+                                                    customer.active ? <Badge variant="default">Active</Badge> : <Badge variant="destructive">Inactive</Badge>
                                                 }
                                             </TableCell>
                                             <TableCell>{formatDate(customer.creation_date)}</TableCell>
@@ -104,11 +117,21 @@ const TableCustomers = () => {
                                 }
                             </TableBody>
                         </Table>
+                        <div className="flex justify-center mt-4">
+                            {pageNumbers.map(number => (
+                                <Button 
+                                    key={number}
+                                    onClick={() => setCurrentPage(number)}
+                                    variant={currentPage === number ? "ghost" : "outline"}
+                                    className={`mx-1 ${currentPage === number ? "solid" : "outline"}`}
+                                >
+                                    {number}
+                                </Button>
+                            ))}
+                        </div>
                     </div>
             }
-
         </div>
-
     )
 }
 

@@ -8,10 +8,10 @@ const index = () => {
         <LayoutDash>
             <div className="grid min-h-screen w-full overflow-hidden ">
                 <div className="flex flex-col">
-                    <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-                        <div >
+                    <main className="flex flex-1 flex-col gap-4 p-4 md:gap-2 md:p-3 ">
+                        {/* <div > */}
                             <CardProfileStore />
-                        </div>
+                        {/* </div> */}
                             <AnalyticOverview/>   
                     </main>
                 </div>

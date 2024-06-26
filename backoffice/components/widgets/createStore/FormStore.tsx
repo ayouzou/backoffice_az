@@ -20,7 +20,7 @@ import Link from "next/link"
 
 export default function FormStore() {
     const queryClient = useQueryClient()
-    const { auth,logout } = useAuth()
+    const { auth, logout } = useAuth()
     const [uploadedAssets, setUploadedAssets] = useState<string[]>([])
     const form = useForm<z.infer<typeof storeFormSchema>>({
         resolver: zodResolver(storeFormSchema),
@@ -32,7 +32,7 @@ export default function FormStore() {
         onSettled(res) {
             if (!res?.error) {
                 queryClient.invalidateQueries({ queryKey: ['STORES'] })
-                  window.location.href ='/stores'
+                window.location.href = '/stores'
             }
         }
     })
@@ -44,19 +44,18 @@ export default function FormStore() {
         })
     }
     return (
-        <div className="container mx-auto my-12 px-4 md:px-6 lg:px-8">
+        <div className="container mx-auto my-2 px-4 md:px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-               
                 <div className="col-span-1 md:col-span-2 lg:col-span-3">
-                <Link href={'/stores'}>Back to stores</Link>
+                    <Link href={'/stores'} >Back to stores</Link>
                     <h1 className="text-3xl font-bold mb-4">Create Your Store</h1>
-                    <p className="text-muted-foreground mb-8">Fill out the form below to get started.</p>
+                    <p className="text-muted-foreground ">Fill out the form below to get started.</p>
                 </div>
                 <div className="col-span-1 md:col-span-2 lg:col-span-2">
                     <Form {...form} >
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                             <div>
-                                <FormField  control={form.control} name="name"
+                                <FormField control={form.control} name="name"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Name</FormLabel>
@@ -102,7 +101,7 @@ export default function FormStore() {
                                 />
                             </div>
                             <div>
-                                <FormField  control={form.control}  name="category"
+                                <FormField control={form.control} name="category"
                                     render={({ field }) => (
                                         <FormItem className="w-full">
                                             <FormLabel>Category</FormLabel>
@@ -124,7 +123,7 @@ export default function FormStore() {
                                 />
                             </div>
                             <div className="grid sm:grid-cols-2 grid-cols-1 gap-4">
-                                <FormField  control={form.control} name="template"
+                                <FormField control={form.control} name="template"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Template</FormLabel>
@@ -158,7 +157,7 @@ export default function FormStore() {
                     </Form>
                 </div>
                 <div className="col-span-1 md:col-span-2 lg:col-span-1">
-                    <Card className="h-full">
+                    <Card className="">
                         <CardHeader>
                             <CardTitle>Preview</CardTitle>
                             <CardDescription>This is how your store will look with the selected template.</CardDescription>

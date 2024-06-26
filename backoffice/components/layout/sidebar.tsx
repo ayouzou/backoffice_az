@@ -3,29 +3,29 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa'
 import { BsChatSquareDots } from "react-icons/bs";
+import { MdDashboardCustomize } from 'react-icons/md';
 
 const Sidebar = () => {
     const router = useRouter()
-    const [openProduct, setOpenProduct] = useState(false)
+    const [openProduct, setOpenProduct] = useState(true)
     return (
-        <div className='w-64  h-[48rem] border-r-2'>
+        <div className='w-60  h-[48rem] border-r-2 '>
             <nav className="flex flex-col gap-y-4 mt-4 items-start px-4 text-sm font-medium">
-                <Link
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
+                <Link className="flex items-center gap-3 rounded-lg px-10  pl-4 py-2 text-gray-900 bg-gray-100 transition-all hover:text-gray-900  dark:text-gray-50 dark:hover:text-gray-50"
                     href={`/store/${router.query.slug}`}
                 >
                     <HomeIcon className="h-4 w-4" />
                     Overview
                 </Link>
                 <Link
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    className="flex items-center gap-3 rounded-lg px-10 pl-4 py-2 text-gray-900 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                     href={`/store/${router.query.slug}/orders`}
                 >
                     <ShoppingCartIcon className="h-4 w-4" />
                     Orders
                 </Link>
                 <Link
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    className="flex items-center gap-3 rounded-lg px-10 pl-4 py-2 text-gray-900 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                     href={`/store/${router.query.slug}/customers`}
                 >
                     <UsersIcon className="h-4 w-4" />
@@ -33,10 +33,9 @@ const Sidebar = () => {
                 </Link>
                 <div className='w-full'>
                     <div className='flex items-center justify-between w-full ' onClick={() => setOpenProduct(!openProduct)}>
-                        <div className='flex items-center w-full  gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 '>
+                        <div className='flex items-center w-full  gap-3 rounded-lg px-10 pl-4 py-2 text-gray-900 transition-all hover:text-gray-900 '>
                             <PackageIcon className="h-4 w-4" />
                             Products
-
                         </div>
                         {
                             openProduct ? <FaAngleUp /> : <FaAngleDown />
@@ -46,26 +45,29 @@ const Sidebar = () => {
                         openProduct ?
                             <>
                                 <Link
-                                    className="flex items-center gap-3 rounded-lg px-6 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                                    className="flex items-center gap-3 hover:underline rounded-lg px-6 py-2 text-gray-900 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                                     href={`/store/${router.query.slug}/products2`}>
                                     <PackageIcon className="h-4 w-4" />
                                     All products
                                 </Link>
                                 <Link
-                                    className="flex items-center gap-3 rounded-lg px-6 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                                    className="flex items-center gap-3 rounded-lg px-5 hover:underline py-2 text-gray-900 transition-all hover:text-gray-900 "
                                     href={`/store/${router.query.slug}/create-products`}>
-                                    <PackageIcon className="h-4 w-4" />
-                                    create products
+                                    <PackageIcon className="h-4 w-4" /> create products
                                 </Link>
                             </> : ''
                     }
                 </div>
-                <Link className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                <Link className="flex items-center gap-3 rounded-lg px-10 pl-4 py-2 text-gray-900 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                     href={`/store/${router.query.slug}/chats`}>
                     <BsChatSquareDots className="h-4 w-4" />
                     Chats
                 </Link>
-
+                <Link className="flex items-center gap-3 rounded-lg px-10 pl-4 py-2 text-gray-900 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    href={`/store/${router.query.slug}/apperance`}>
+                    <MdDashboardCustomize className="h-4 w-4" />
+                    Apperance
+                </Link>
             </nav>
         </div>
     )
@@ -91,13 +93,6 @@ function HomeIcon(props: any) {
         </svg>
     )
 }
-
-
-
-
-
-
-
 function PackageIcon(props: any) {
     return (
         <svg
@@ -119,10 +114,6 @@ function PackageIcon(props: any) {
         </svg>
     )
 }
-
-
-
-
 function ShoppingCartIcon(props: any) {
     return (
         <svg
@@ -143,8 +134,6 @@ function ShoppingCartIcon(props: any) {
         </svg>
     )
 }
-
-
 function UsersIcon(props: any) {
     return (
         <svg

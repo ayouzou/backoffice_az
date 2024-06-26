@@ -47,7 +47,7 @@ const CardProfileStore = () => {
                                         </div>
                                         <div>
                                             <h3 className="text-lg font-bold">Email</h3>
-                                            {/* <p className="text-gray-500 dark:text-gray-400 mt-2">{auth?.user?.email}</p> */}
+                                            <p className="text-gray-500 dark:text-gray-400 mt-2">{auth?.user?.email}</p>
                                         </div>
                                     </div>
                                     <div className="mt-8 text-right flex justify-end gap-2">

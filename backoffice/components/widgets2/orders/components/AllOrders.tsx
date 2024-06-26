@@ -39,7 +39,7 @@ const AllOrders = () => {
             {
                 isLoading ? <Loading /> :
                     <>
-                        <div className='bg-white shadow-md h-20  mx-4 my-2'>
+                        <div className='bg-white shadow-md h-20  mx-4 my-2 '>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-10 p-4">
                                     <p className="text-md text-gray-600   w-40">Filter Orders</p>
